@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Mel ❤️</title>
+
+<style>
+  :root{
+    --pink1:#ff4d6d;
+    --pink2:#ff8fa3;
+    --pink3:#ffc2d1;
+    --deep:#ff2d55;
+    --ink:#222;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,var(--pink1),var(--pink2),var(--pink3));
+    font-family: Arial, sans-serif;
+    overflow:hidden;
+  }
+
+  /* mini website wrapper */
+  .app{
+    width:min(980px, 92vw);
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap:18px;
+    align-items:stretch;
+  }
+
+  @media (max-width: 860px){
+    .app{ grid-template-columns: 1fr; }
+  }
+
+  .card{
+    background:rgba(255,255,255,0.92);
+    border:1px solid rgba(255,255,255,0.6);
+    padding:22px;
+    border-radius:22px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.18);
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* top nav (mini website feel) */
+  .nav{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    margin-bottom:12px;
+    flex-wrap:wrap;
+  }
+  .nav button{
+    border:none;
+    padding:10px 14px;
+    border-radius:999px;
+    background:#fff;
+    color:var(--deep);
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 8px 16px rgba(0,0,0,0.12);
+    transition:transform .15s ease, background .2s ease;
+  }
+  .nav button:hover{ transform:scale(1.04); }
+  .nav button.active{
+    background:var(--deep);
+    color:#fff;
+  }
+
+  h2{
+    margin:6px 0 6px;
+    color:var(--deep);
+  }
+  p{
+    margin:8px 0 0;
+    font-size:15px;
+    color:#333;
+    line-height:1.45;
+  }
+
+  /* main CTA */
+  .cta{
+    margin-top:14px;
+    border:none;
+    padding:12px 20px;
+    border-radius:999px;
+    background:var(--deep);
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+    font-weight:700;
+    box-shadow:0 10px 18px rgba(255,45,85,0.25);
+    transition:transform .15s ease;
+  }
+  .cta:hover{ transform:scale(1.05); }
+
+  .hidden{ display:none; }
+
+  /* typing animation */
+  .typed-wrap{
+    margin:10px auto 4px;
+    display:inline-block;
+    padding:10px 14px;
+    border-radius:16px;
+    background:rgba(255,45,85,0.08);
+    border:1px solid rgba(255,45,85,0.18);
+  }
+  .typed{
+    font-size:22px;
+    font-weight:800;
+    color:var(--deep);
+    letter-spacing:0.2px;
+  }
+  .caret{
+    display:inline-block;
+    width:10px;
+    margin-left:2px;
+    border-right:3px solid var(--deep);
+    height:22px;
+    transform: translateY(3px);
+    animation: blink .8s infinite;
+  }
+  @keyframes blink { 50% { opacity:0; } }
+
+  /* ✅ Heart-shaped photo frame (FIXED: image fills heart) */
+  .heart-frame{
+    width:240px;
+    height:230px;
+    margin:14px auto 10px;
+    position:relative;
+    filter: drop-shadow(0 10px 18px rgba(0,0,0,0.22));
+  }
+
+  .heart-img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    border:6px solid rgba(255,255,255,0.9);
+    border-radius:18px; /* fallback */
+    clip-path: path("M120 38 C120 18 141 6 161 6 C190 6 214 27 214 62 C214 120 120 180 120 180 C120 180 26 120 26 62 C26 27 50 6 79 6 C99 6 120 18 120 38 Z");
+  }
+
+  /* love letter animation */
+  .letter-stage{
+    min-height:420px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+  }
+
+  .envelope{
+    width:320px;
+    max-width:86%;
+    height:200px;
+    position:relative;
+    cursor:pointer;
+    user-select:none;
+  }
+
+  .env-back{
+    position:absolute;
+    inset:0;
+    background:#fff;
+    border-radius:18px;
+    box-shadow:0 12px 28px rgba(0,0,0,0.18);
+    overflow:hidden;
+  }
+
+  /* envelope triangles */
+  .env-back::before,
+  .env-back::after{
+    content:"";
+    position:absolute;
+    width:0;height:0;
+    border-style:solid;
+  }
+  /* left */
+  .env-back::before{
+    left:0; top:0;
+    border-width:100px 0 100px 160px;
+    border-color:transparent transparent transparent rgba(255,45,85,0.10);
+  }
+  /* right */
+  .env-back::after{
+    right:0; top:0;
+    border-width:100px 160px 100px 0;
+    border-color:transparent rgba(255,45,85,0.08) transparent transparent;
+  }
+
+  .env-front{
+    position:absolute;
+    inset:0;
+    border-radius:18px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.0), rgba(255,45,85,0.08));
+    border:1px solid rgba(0,0,0,0.06);
+    z-index:3;
+  }
+
+  .flap{
+    position:absolute;
+    left:0; right:0;
+    top:0;
+    height:120px;
+    background:rgba(255,45,85,0.12);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top;
+    transition: transform 650ms cubic-bezier(.2,.9,.2,1);
+    z-index:2;
+  }
+
+  /* ✅ Paper above seal so “I love you” is visible */
+  .paper{
+    z-index: 5;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    width:92%;
+    height:180px;
+    top:18px;
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 10px 22px rgba(0,0,0,0.14);
+    padding:16px 14px 18px;
+    border:1px solid rgba(0,0,0,0.06);
+    transition: transform 750ms cubic-bezier(.2,.9,.2,1), opacity 500ms ease;
+    opacity:0;
+  }
+
+  .paper h3{
+    margin:0 0 6px;
+    color:var(--deep);
+  }
+  .paper p{
+    margin:0;
+    color:#333;
+    font-size:14px;
+    line-height:1.45;
+  }
+
+  .seal{
+    position:absolute;
+    left:50%;
+    top:68%; /* ✅ moved lower */
+    transform:translate(-50%,-50%);
+    width:52px;
+    height:52px;
+    border-radius:999px;
+    background:var(--deep);
+    display:grid;
+    place-items:center;
+    color:#fff;
+    font-weight:900;
+    box-shadow:0 10px 18px rgba(255,45,85,0.28);
+    z-index:2; /* ✅ behind paper */
+  }
+
+  .hint{
+    margin-top:12px;
+    font-size:13px;
+    opacity:0.85;
+    color:#3a3a3a;
+  }
+
+  /* open state */
+  .envelope.open .flap{
+    transform: rotateX(180deg);
+  }
+  .envelope.open .paper{
+    opacity:1;
+    transform: translateX(-50%) translateY(-85px);
+  }
+
+  /* floating hearts */
+  .heart{
+    position:absolute;
+    bottom:-25px;
+    font-size:20px;
+    animation: floatUp 5s linear forwards;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.22));
+    pointer-events:none;
+  }
+  @keyframes floatUp{
+    0%{ transform:translateY(0) scale(1); opacity:0.95;}
+    100%{ transform:translateY(-115vh) scale(1.7); opacity:0;}
+  }
+
+  /* fireworks hearts effect */
+  .spark{
+    position:absolute;
+    width:10px;
+    height:10px;
+    border-radius:999px;
+    pointer-events:none;
+    animation: spark 900ms ease-out forwards;
+    background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0.2));
+  }
+  .spark::after{
+    content:"❤️";
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    font-size:16px;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.22));
+  }
+  @keyframes spark{
+    0%{ transform: translate(0,0) scale(0.3); opacity:1;}
+    100%{ transform: translate(var(--dx), var(--dy)) scale(1.1); opacity:0;}
+  }
+
+  .footer{
+    margin-top:14px;
+    font-size:12px;
+    color:#666;
+    opacity:0.9;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="app">
+  <!-- LEFT: Surprise / Photo / Typing -->
+  <section class="card" id="homeCard">
+    <div class="nav">
+      <button class="active" data-tab="home">Home</button>
+      <button data-tab="letter">Letter</button>
+    </div>
+
+    <h2>Hello Mel ❤️</h2>
+    <p>I made a little surprise for you.</p>
+
+    <button class="cta" id="startBtn">Click Me</button>
+
+    <div id="loveMessage" class="hidden">
+      <div class="typed-wrap">
+        <span class="typed" id="typedText"></span><span class="caret"></span>
+      </div>
+
+      <p id="shortMsg">
+        You’re my favorite person. Thank you for being my peace and my joy. ❤️
+      </p>
+
+      <!-- ✅ FIXED HEART PHOTO -->
+      <div class="heart-frame">
+        <img class="heart-img" src="mel.jpeg" alt="Our Picture" />
+      </div>
+
+      <div class="footer">Made with love ✨</div>
+    </div>
+  </section>
+
+  <!-- RIGHT: Love Letter -->
+  <section class="card hidden" id="letterCard">
+    <div class="nav">
+      <button data-tab="home">Home</button>
+      <button class="active" data-tab="letter">Letter</button>
+    </div>
+
+    <div class="letter-stage">
+      <!-- ✅ CENTERED ENVELOPE -->
+      <div class="envelope" id="envelope" title="Click to open">
+        <div class="env-back"></div>
+        <div class="flap"></div>
+
+        <div class="paper" id="paper">
+          <h3>To Mel 💌</h3>
+          <p>
+            I just want you to know… I’m thankful for you.<br/>
+            You make my days softer and my heart fuller.<br/><br/>
+            I love you, always. ❤️
+          </p>
+        </div>
+
+        <div class="env-front"></div>
+        <div class="seal">M</div>
+      </div>
+
+      <div class="hint">Tap the envelope to open the letter 💖</div>
+    </div>
+  </section>
+</div>
+
+<audio id="music" preload="auto">
+  <source src="PALAGI.mp3" type="audio/mpeg" />
+</audio>
+
+<script>
+  // Tabs (mini website)
+  const homeCard = document.getElementById("homeCard");
+  const letterCard = document.getElementById("letterCard");
+
+  document.querySelectorAll(".nav button").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const tab = btn.getAttribute("data-tab");
+      if(tab === "home"){
+        homeCard.classList.remove("hidden");
+        letterCard.classList.add("hidden");
+        document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+        document.querySelectorAll('[data-tab="home"]').forEach(b=>b.classList.add('active'));
+      }else{
+        letterCard.classList.remove("hidden");
+        homeCard.classList.add("hidden");
+        document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+        document.querySelectorAll('[data-tab="letter"]').forEach(b=>b.classList.add('active'));
+      }
+    });
+  });
+
+  // Music + reveal
+  const startBtn = document.getElementById("startBtn");
+  const loveMessage = document.getElementById("loveMessage");
+  const music = document.getElementById("music");
+
+  // Typing animation
+  const typedText = document.getElementById("typedText");
+  const phrase = "I Love You Mel 💖";
+  let typingStarted = false;
+
+  function typePhrase(){
+    if(typingStarted) return;
+    typingStarted = true;
+    typedText.textContent = "";
+    let i = 0;
+    const timer = setInterval(()=>{
+      typedText.textContent += phrase[i] ?? "";
+      i++;
+      if(i >= phrase.length){
+        clearInterval(timer);
+      }
+    }, 85);
+  }
+
+  // Floating hearts
+  function createFloatingHeart(){
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = ["❤️","💖","💕","💘","💗"][Math.floor(Math.random()*5)];
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.animationDuration = (3 + Math.random()*3) + "s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(), 6500);
+  }
+
+  // Fireworks hearts burst
+  function fireworksHearts(x, y){
+    const count = 18;
+    for(let i=0;i<count;i++){
+      const s = document.createElement("div");
+      s.className = "spark";
+      s.style.left = x + "px";
+      s.style.top = y + "px";
+
+      const angle = (Math.PI * 2) * (i / count);
+      const dist = 40 + Math.random()*70;
+      const dx = Math.cos(angle) * dist;
+      const dy = Math.sin(angle) * dist;
+
+      s.style.setProperty("--dx", dx + "px");
+      s.style.setProperty("--dy", dy + "px");
+
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(), 950);
+    }
+  }
+
+  let heartInterval = null;
+
+  startBtn.addEventListener("click", async (e)=>{
+    loveMessage.classList.remove("hidden");
+    startBtn.style.display = "none";
+
+    typePhrase();
+
+    // play music
+    try { await music.play(); } catch(err){}
+
+    // fireworks at button position
+    const rect = e.target.getBoundingClientRect();
+    fireworksHearts(rect.left + rect.width/2, rect.top + rect.height/2);
+
+    // heart burst
+    for(let i=0;i<24;i++){
+      setTimeout(createFloatingHeart, i*110);
+    }
+
+    // continuous hearts
+    if(!heartInterval){
+      heartInterval = setInterval(createFloatingHeart, 550);
+    }
+  });
+
+  // fireworks anywhere after reveal
+  document.addEventListener("click", (e)=>{
+    if(loveMessage.classList.contains("hidden")) return;
+    fireworksHearts(e.clientX, e.clientY);
+  });
+
+  // Love letter open animation
+  const envelope = document.getElementById("envelope");
+  envelope.addEventListener("click", ()=>{
+    envelope.classList.toggle("open");
+  });
+</script>
+
+</body>
+</html>
